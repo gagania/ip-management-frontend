@@ -6,6 +6,9 @@
             <a class="nav-link" href="{{ url('/ip/index') }}">IP Address</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ url('/audit_trails/index') }}">Audit Trails</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
         </li>
     </ul>

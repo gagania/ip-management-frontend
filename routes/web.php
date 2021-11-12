@@ -31,3 +31,8 @@ $router->group(['prefix'=>'ip'],function() use ($router) {
     $router->post('/create','IpController@create');
     $router->post('/update','IpController@update');
 });
+
+$router->group(['prefix'=>'audit_trails'],function() use ($router) {
+    $router->get('/index','AuditTrailsController@index');
+    $router->get('/edit/{id}','AuditTrailsController@edit');
+});
