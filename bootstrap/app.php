@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app->withFacades();
 
 // $app->withEloquent();
 
@@ -90,10 +90,20 @@ $app->configure('app');
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->middleware(Illuminate\Session\Middleware\StartSession::class);    
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+
+$app->singleton(Illuminate\Session\SessionManager::class, function () use ($app) {
+    return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session');
+});
+
+$app->singleton('session.store', function () use ($app) {
+    return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session.store');
+});
+$app->configure('session');
 
 /*
 |--------------------------------------------------------------------------
