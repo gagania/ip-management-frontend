@@ -82,8 +82,8 @@ class IpController extends Controller
         }
         else{
             $response['success'] = false;
-            $response['message'] = 'Update Fail.';
-            return $response;
+            $response['message'] = $response['ip'];
+            return view('ip.add', ['results' => $response['message'][0]]);
         }
     }
 

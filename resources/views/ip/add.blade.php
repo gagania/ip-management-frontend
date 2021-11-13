@@ -5,6 +5,10 @@
     <p>Add - Post</p>
     <form method="POST" action="{{url('ip/create')}}">
         <div class="form-control row col-md-6">
+            @if (isset($results))
+                <span>{{ $results }}</span>
+                <br/>
+            @endif
             <label class="col-md-3">IP Address</label>
             <div class="col-md-8">
             <input name="ip" value="" placeholder="IP...">
