@@ -9,6 +9,9 @@
             <a class="nav-link" href="{{ url('/audit_trails/index') }}">Audit Trails</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ url('/access_log/index') }}">Access Log</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
         </li>
     </ul>
