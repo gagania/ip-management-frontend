@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function auth(Request $request) {
         $token = $this->getToken($request);
         if ($token['success']) {
-            $request->session()->put('token', $token["token_type"].' '.$token["access_token"]);
+            $request->session()->put('token', 'Bearer '.$token["data"]['user']['token']);
             $this->setAccessLog($request);
             return redirect('dashboard');
         } else {
@@ -50,28 +50,20 @@ class LoginController extends Controller
         }
     }
 
-    public function getToken(Request $request) {
-        $url        = 'http://localhost:8000/v1/oauth/token';
+    private function getToken($request)
+    {
+        $url        = 'http://localhost:8000/login';
         $headers    = ['Content-Type: application/json'];
 
-        $client_id = env('CLIENT_ID');
-        $client_secret = env('CLIENT_SECRET');
-        $username = $request->input('user_name');
-        $password = $request->input('password');
+        $data       = array(
+            'email'     => $request->input('user_name'),
+            'password'  => $request->input('password'), 
+        );
 
-        $data = array(
-                'grant_type' => 'password',
-                'client_id' => $client_id,
-                'client_secret' => $client_secret,
-                'username' => $username,
-                'password' => $password,
-                'scope' => '*',
-            );
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
@@ -87,7 +79,7 @@ class LoginController extends Controller
         }
         else{
             $response['success'] = false;
-            $response['message'] = 'User and password is invalid.';
+            $response['message'] = 'User and passord is invalid.';
             return $response;
         }
     }
